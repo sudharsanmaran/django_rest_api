@@ -1,43 +1,28 @@
 
-from django.shortcuts import render
 from rest_framework import status, generics,mixins
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from app1.models import Snippet
 from app1.serializers import SnippetSerializer
 from rest_framework.authentication import SessionAuthentication,BasicAuthentication,TokenAuthentication
-# Create your views here.
-# fucn base view
-@api_view(['GET',"POST",'DELETE','PUT'])
-def snippet_list(request,pk):
-    try:
-        snippet=Snippet.objects.get(pk=pk)
-    except Snippet.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        data = Snippet.objects.all()
-        serializer = SnippetSerializer(data, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
-        serializer = SnippetSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == "DELETE":
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    elif request.method == "PUT":
-        serializer= SnippetSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-# tst for cmit
+from rest_framework import viewsets
 
+#viewset model
+class SnippetModelViewSet(viewsets.ModelViewSet):
+    serializer_class = SnippetSerializer
+    queryset = Snippet.objects.all()
+
+#viewset generic
+class SnippetViewSet(viewsets.GenericViewSet,
+                     mixins.ListModelMixin,
+                     mixins.CreateModelMixin,
+                     mixins.RetrieveModelMixin,
+                     mixins.UpdateModelMixin,
+                     mixins.DestroyModelMixin):
+    serializer_class = SnippetSerializer
+    queryset = Snippet.objects.all()
 
 #generic view,inherit generic & mixins class in restframework
 class GenericSnippetView(generics.GenericAPIView,
@@ -81,7 +66,7 @@ class SnippetView(APIView):
 
     def post(self,request):
         data=request.data
-        # for parse json to model instent field
+        # for parse json to model instence field
         # use data arg in serializer model
         serializer=SnippetSerializer(data=data)
         if serializer.is_valid():
@@ -89,7 +74,7 @@ class SnippetView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-#class view to  deal  with single instance
+#class view to  deal  with single instance ,check(error!)
 class SnippetDetialView(APIView):
 
     def get_object(self,id):
@@ -114,5 +99,31 @@ class SnippetDetialView(APIView):
     #         return Response(serializer.data)
     #     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+# fucn base view
+@api_view(['GET',"POST",'DELETE','PUT'])
+def snippet_list(request,pk):
+    try:
+        snippet=Snippet.objects.get(pk=pk)
+    except Snippet.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        data = Snippet.objects.all()
+        serializer = SnippetSerializer(data, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = SnippetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "DELETE":
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    elif request.method == "PUT":
+        serializer= SnippetSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
