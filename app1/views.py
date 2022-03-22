@@ -41,5 +41,26 @@ class SnippetView(APIView):
 
     def get(self,request):
         data=Snippet.objects.all()
+        print(data)
         serializer=SnippetSerializer(data,many=True)
         return Response(serializer.data)
+
+    def post(self,request):
+        data=request.data
+        # for parse json to model instent field
+        # use data arg in serializer model
+        serializer=SnippetSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self,request):
+        data=request.data
+
+    # check to set specific url to this func for single get
+    # def get_one(self,request,pk):
+    #     data=Snippet.objects.filter(id=pk)
+    #     print(data)
+    #     serialiazer=SnippetSerializer(data,many=True)
+    #     return Response(serialiazer.data)

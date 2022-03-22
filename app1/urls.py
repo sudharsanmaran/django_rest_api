@@ -7,4 +7,5 @@ urlpatterns = [
 
 # path('<int:pk>/', views.snippet_list, name='snippet_list'),
 path('',SnippetView.as_view()),
+path('<int:pk>/',SnippetView.as_view()),
 ]
