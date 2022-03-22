@@ -33,7 +33,7 @@ from app1.serializers import SnippetSerializer
 #             serializer.save()
 #             return Response(serializer.data)
 #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-# tst for cmt
+# tst for cmit
 
 #class based api views
 
