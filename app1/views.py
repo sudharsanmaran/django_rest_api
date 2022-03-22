@@ -49,9 +49,11 @@ class GenericSnippetView(generics.GenericAPIView,
     serializer_class = SnippetSerializer
     queryset = Snippet.objects.all()
     lookup_field = 'id'
-    authentication_classes = [SessionAuthentication,BasicAuthentication,TokenAuthentication]
+    authentication_classes = [SessionAuthentication,
+                              BasicAuthentication,
+                              TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    # authentication_classes = [TokenAuthentication]
+
 
     def get(self,request,id=None):
         if id:
