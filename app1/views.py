@@ -34,7 +34,7 @@ from app1.serializers import SnippetSerializer
 #             return Response(serializer.data)
 #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 #
-
+#
 #class based api views
 
 class Snippet(APIView):
