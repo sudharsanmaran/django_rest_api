@@ -37,7 +37,9 @@ from app1.serializers import SnippetSerializer
 
 #class based api views
 
-class Snippet(APIView):
+class SnippetView(APIView):
 
     def get(self,request):
-        pass
+        data=Snippet.objects.all()
+        serializer=SnippetSerializer(data,many=True)
+        return Response(serializer.data)
