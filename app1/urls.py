@@ -9,9 +9,9 @@ router1.register('snippetmodelviewset',SnippetModelViewSet,
 router1.register('snippetgenericviewset',SnippetViewSet,
                 basename='snippetgenericviewset')
 
-#only viewset class working with router
+#only viewset class working with routers
 # we don't need multiple routers instance
-#add class to single routers instance,
+#add all class to single routers instance,
 # specific class  can call by usinging basename
 
 
