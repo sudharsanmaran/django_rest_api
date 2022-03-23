@@ -2,19 +2,19 @@ from django.urls import path, include
 from app1.views import *
 from rest_framework.routers import DefaultRouter
 
-router1=DefaultRouter()
+router1=DefaultRouter() #SimpleRouter() not for json
 router1.register('snippetmodelviewset',SnippetModelViewSet,
                 basename='snippetmodelviewset')
-# router2=DefaultRouter()
+
 router1.register('snippetgenericviewset',SnippetViewSet,
                 basename='snippetgenericviewset')
 
 #only viewset class working with routers
 # we don't need multiple routers instance
 #add all class to single routers instance,
-# specific class  can call by usinging basename
+# specific class  can call by using basename
 
-
+print("all urls",router1.urls)
 
 # router3=DefaultRouter()
 # router1.register('snippetgenericview',GenericSnippetView,
@@ -45,4 +45,3 @@ path('',include(router1.urls)),
 # path('generic_view/<int:id>/',GenericSnippetView.as_view()),
 # path('<int:pk>/',SnippetView.as_view()),
 ]
-print("all urls",router1.urls)
