@@ -3,21 +3,29 @@ from app1.views import *
 from rest_framework.routers import DefaultRouter
 
 router1=DefaultRouter()
-router1.register('snippetgenericviewset',SnippetModelViewSet,
-                basename='snippetgenericviewset')
-router2=DefaultRouter()
-router2.register('snippetmodelviewset',SnippetViewSet,
+router1.register('snippetmodelviewset',SnippetModelViewSet,
                 basename='snippetmodelviewset')
-router3=DefaultRouter()
-router3.register('snippetgenericview',GenericSnippetView,
-                basename='snippetgenericview')
-router4=DefaultRouter()
-router4.register('snippetclassview',SnippetView,
-                basename='snippetclassview')
+# router2=DefaultRouter()
+router1.register('snippetgenericviewset',SnippetViewSet,
+                basename='snippetgenericviewset')
 
-router5=DefaultRouter()
-router5.register('SnippetView',SnippetView.as_view(),
-                basename='SnippetView')
+#only viewset class working with router
+# we don't need multiple routers instance
+#add class to single routers instance,
+# specific class  can call by usinging basename
+
+
+
+# router3=DefaultRouter()
+# router1.register('snippetgenericview',GenericSnippetView,
+#                 basename='snippetgenericview')
+# router4=DefaultRouter()
+# router4.register('snippetclassview',SnippetView,
+#                 basename='snippetclassview')
+
+# router5=DefaultRouter()
+# router5.register('SnippetView',SnippetView.as_view(),
+#                 basename='SnippetView')
 
 
 
@@ -25,8 +33,9 @@ router5.register('SnippetView',SnippetView.as_view(),
 urlpatterns = [
 
 path('',include(router1.urls)),
-# path('',include(router2.urls)),
-# path('',include(router3.urls)),
+# path('r2/',include(router2.urls)),
+# path('r3/',include(router3.urls)),
+
 # path('',include(router4.urls)),
 # path('SnippetView/',include(router5.urls)),
 
@@ -36,3 +45,4 @@ path('',include(router1.urls)),
 # path('generic_view/<int:id>/',GenericSnippetView.as_view()),
 # path('<int:pk>/',SnippetView.as_view()),
 ]
+print("all urls",router1.urls)
